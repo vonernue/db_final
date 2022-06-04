@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS `item` (
 	`price` 			INT,
 	`discount_price`	INT,
 	`quantity` 			INT,
-	`img` 				INT,
-	`data_added` 		DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`img` 				VARCHAR(32),
+	`date_added` 		DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`availability` 		BOOLEAN,
 	PRIMARY KEY (`item_id`)
 ) ENGINE=InnoDB;

@@ -12,7 +12,7 @@ $stmt->execute();
 // Fetch the products from the database and return the result as an Array
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Get the total number of products
-$total_products = $pdo->query('SELECT * FROM products')->rowCount();
+$total_products = $pdo->query('SELECT * FROM item')->rowCount();
 ?>
 
 <?=template_header('Products')?>
@@ -22,9 +22,9 @@ $total_products = $pdo->query('SELECT * FROM products')->rowCount();
     <p><?=$total_products?> Products</p>
     <div class="products-wrapper">
         <?php foreach ($products as $product): ?>
-        <a href="index.php?page=product&id=<?=$product['id']?>" class="product">
+        <a href="index.php?page=product&id=<?=$product['item_id']?>" class="product">
             <img src="imgs/<?=$product['img']?>" width="200" height="200" alt="<?=$product['item_name']?>">
-            <span class="name"><?=$product['name']?></span>
+            <span class="name"><?=$product['item_name']?></span>
             <span class="price">
                 &dollar;<?=$product['price']?>
                 <?php if ($product['discount_price'] > 0): ?>
