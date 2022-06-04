@@ -8,14 +8,12 @@
                 echo '<script>alert("Account already exists!")</script>';
             } else {
                 $stmt = $pdo->prepare('INSERT INTO customer (account, password) VALUES (?, ?)');
-                $stmt->execute([$_post['account'], $_post['password']);
+                $stmt->execute($_post['account'], $_post['password']);
                 echo '<script>alert("Register successfully!")</script>';
             }
         } else {
             echo '<p>Passwords do not match!</p>';
         }
-    }else{
-        if
     }
 
 

@@ -25,13 +25,13 @@ if (isset($_GET['id'])) {
         <h1 class="name"><?=$product['item_name']?></h1>
         <span class="price">
             &dollar;<?=$product['price']?>
-            <?php if ($product['rrp'] > 0): ?>
-            <span class="rrp">&dollar;<?=$product['rrp']?></span>
+            <?php if ($product['discount_price'] > 0): ?>
+            <span class="rrp">&dollar;<?=$product['discount_price']?></span>
             <?php endif; ?>
         </span>
         <form action="index.php?page=cart" method="post">
             <input type="number" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
-            <input type="hidden" name="product_id" value="<?=$product['id']?>">
+            <input type="hidden" name="product_id" value="<?=$product['item_id']?>">
             <input type="submit" value="Add To Cart">
         </form>
         <div class="description">
