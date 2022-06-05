@@ -25,8 +25,8 @@ if (isset($_GET['id'])) {
         <h1 class="name"><?=$product['item_name']?></h1>
         <span class="price">
             &dollar;<?=$product['price']?>
-            <?php if ($product['discount_price'] > 0): ?>
-            <span class="rrp">&dollar;<?=$product['discount_price']?></span>
+            <?php if ($product['rrp'] > 0): ?>
+            <span class="rrp">&dollar;<?=$product['rrp']?></span>
             <?php endif; ?>
         </span>
         <form action="index.php?page=cart" method="post">
