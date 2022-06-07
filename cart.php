@@ -90,6 +90,7 @@ if ($products_in_cart) {
                     <td>Price</td>
                     <td>Quantity</td>
                     <td>Total</td>
+                    <td>Remove</td>
                 </tr>
             </thead>
             <tbody>
@@ -115,6 +116,9 @@ if ($products_in_cart) {
                         <input type="number" name="quantity-<?=$product['item_id']?>" value="<?=$products_in_cart[$product['item_id']]?>" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
                     </td>
                     <td class="price">&dollar;<?=$product['price'] * $products_in_cart[$product['item_id']]?></td>
+                    <td class="buttons">
+                        <input type="submit" value="Remove" name="remove">
+                    </td>
                 </tr>
                 <?php endforeach; ?>
                 <?php endif; ?>
