@@ -11,6 +11,15 @@ if (isset($_GET['id'])) {
         // Simple error to display if the id for the product doesn't exists (array is empty)
         exit('Product does not exist!');
     }
+
+    $stmt_category = $pdo->prepare('SELECT * FROM item natural join item_category WHERE item_id = ?');
+    $stmt_category->execute([$_GET['id']]);
+    $product_category = $stmt_category->fetch(PDO::FETCH_ASSOC);
+    if (!$product_category) {
+        // Simple error to display if the id for the product doesn't exists (array is empty)
+        exit('Product\'s category does not exist!');
+    }
+
 } else {
     // Simple error to display if the id wasn't specified
     exit('Product does not exist!');

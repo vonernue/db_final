@@ -16,7 +16,16 @@ $total_products = $pdo->query('SELECT * FROM item')->rowCount();
 ?>
 
 <?=template_header('Products')?>
-
+<div class ="category">
+        <a href="index.php?page=products">Products</a><br>
+        <a href="index.php?page=T-shirt">T-Shirt</a> <br>
+        <a href="index.php?page=men">Men</a> <br>
+        <a href="index.php?page=women">Women</a><br>
+        <a href="index.php?page=jacket">Jacket</a><br>
+        <a href="index.php?page=jeans">Jeans</a><br>
+        <a href="index.php?page=pants">Pants</a><br>
+        <a href="index.php?page=underwear">Underwear</a><br>
+    </div>
 <div class="products content-wrapper">
     <h1>Products</h1>
     <p><?=$total_products?> Products</p>

@@ -346,6 +346,7 @@
 	text-align: center;
 	width: 100%;
   }
+
   
   main > .products .products-header {
 	display: flex;
@@ -373,6 +374,10 @@
   main > .products .buttons {
 	text-align: right;
 	padding-bottom: 40px;
+  }
+  
+  main > .products .buttons a:first-child {
+	margin-right: 5px;
   }
   
   main > .products .buttons a:first-child {
