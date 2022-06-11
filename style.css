@@ -4,7 +4,7 @@
 		
 	}
 	
-	button.catagory_button {
+	a.catagory_button {
 		background-color: #ffffff;
 		border: 1px solid #ccc;
 		border-radius: 4px;
@@ -17,9 +17,10 @@
 		padding: 20px 40px;
 		text-align: center;
 		transition-duration: 0.4s;
+		text-decoration: none;
 	}
 
-	button.catagory_button:hover {
+	a.catagory_button:hover {
 		background-color: #ccc;
 		color: white;
 	}
