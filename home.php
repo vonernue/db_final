@@ -11,6 +11,11 @@ $recently_added_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h2>SUPER CLOTHES</h2>
     <p>New Clothes, New Passion.</p>
 </div>
+<div class="content-wrapper">
+    <nav> 
+        <a href="index.php?page=manage">manager</a>
+    </nav>
+</div>
 <div class="recentlyadded content-wrapper">
     <h2>Recently Added Products</h2>
     <div class="products">
