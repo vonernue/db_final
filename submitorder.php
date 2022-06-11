@@ -1,7 +1,4 @@
-
-
-
- <?= template_header('') ?>
+<?= template_header('') ?>
 <?php
 $totalPrice = 200 ;
 $nameInput = "" ;
