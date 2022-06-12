@@ -8,12 +8,10 @@ if (isset($_POST['product_id'], $_POST['quantity']) ){
     //database
     pdo_connect_mysql();
     $query = 'UPDATE item
-    SET quantity= :tmpquantity
-    WHERE item_id= :tmpid';
+    SET quantity= ?
+    WHERE item_id= ?';
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":total_price", $totalPrice);
-    $stmt->bindParam(":name", $nameInput);
-    if ($stmt->execute()) {
+    if ($stmt->execute($quantity,$_product_id)) {
         echo "Insert Success!";
     } else {
         echo $stmt->error;
@@ -21,10 +19,10 @@ if (isset($_POST['product_id'], $_POST['quantity']) ){
 }
 
 ?>
-
+<?=template_manager('amount')?>
 <div class="placeorder content-wrapper">
     <form action="" method="post">
         <p>Change successful!</p>
     </form>
-</div>
+</div> 
 
