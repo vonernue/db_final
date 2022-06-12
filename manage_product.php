@@ -25,8 +25,8 @@ if (isset($_GET['id'])) {
     exit('Product does not exist!');
 }
 ?>
-
-<?=template_header('Product')?>
+ 
+<?=template_manager('Product')?>
 
 <div class="product content-wrapper">
     <img src="imgs/<?=$product['img']?>" width="500" height="500" alt="<?=$product['item_name']?>">
@@ -43,10 +43,10 @@ if (isset($_GET['id'])) {
             <span class="rrp">&dollar;<?=$product['rrp']?></span>
             <?php endif; ?>
         </span>
-        <form action="index.php?page=cart" method="post">
+        <form action="amount.php" method="post">
             <input type="number" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
             <input type="hidden" name="product_id" value="<?=$product['item_id']?>">
-            <input type="submit" value="Add To Cart">
+            <input type="submit" value="Update Amount">
         </form>
         <div class="description">
             <?=$product['desc']?>
