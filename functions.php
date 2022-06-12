@@ -81,7 +81,7 @@ echo <<<EOT
                 <h1>Shopping Cart System</h1>
                 <nav>
                     <a href="index.php?page=manage">Home</a>
-                    <a href="index.php?page=order_manage">Order manage</a>
+                    <a href="index.php?page=order_information">Order information</a>
                     <a href="index.php?page=myaccount">My Account</a>
                 </nav>
             </div>
