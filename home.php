@@ -1,6 +1,6 @@
 <?php
 // Get the 4 most recently added products
-$stmt = $pdo->prepare('SELECT * FROM item ORDER BY date_added DESC LIMIT 4');
+$stmt = $pdo->prepare('SELECT * FROM item WHERE item.quantity<>0 ORDER BY date_added DESC LIMIT 4');
 $stmt->execute();
 $recently_added_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
