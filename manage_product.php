@@ -44,9 +44,14 @@ if (isset($_GET['id'])) {
             <?php endif; ?>
         </span>
         <form action="index.php?page=amount" method="post">
-            <input type="number" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
+            <input type="number" name="quantity" value="1" min="1" max="99" placeholder="Quantity" required>
             <input type="hidden" name="product_id" value="<?=$product['item_id']?>">
             <input type="submit" value="Update Amount">
+        </form>
+        <form action="index.php?page=price" method="post">
+            <input type="number" name="price" value="1"  placeholder="Quantity" required>
+            <input type="hidden" name="product_id" value="<?=$product['item_id']?>">
+            <input type="submit" value="Update Price">
         </form>
         <div class="description">
             <?=$product['desc']?>
