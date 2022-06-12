@@ -34,6 +34,7 @@ if (isset($_GET['remove']) && is_numeric($_GET['remove']) && isset($_SESSION['ca
     // Remove the product from the shopping cart
     unset($_SESSION['cart'][$_GET['remove']]);
 }
+
 // Update product quantities in cart if the user clicks the "Update" button on the shopping cart page
 if (isset($_POST['update']) && isset($_SESSION['cart'])) {
     // Loop through the post data so we can update the quantities for every product in cart
@@ -108,8 +109,6 @@ if ($products_in_cart) {
                     </td>
                     <td>
                         <a href="index.php?page=product&id=<?=$product['item_id']?>"><?=$product['item_name']?></a>
-                        <br>
-                        <a href="index.php?page=cart&remove=<?=$product['item_id']?>" class="remove">Remove</a>
                     </td>
                     <td class="price">&dollar;<?=$product['price']?></td>
                     <td class="quantity">
@@ -117,7 +116,7 @@ if ($products_in_cart) {
                     </td>
                     <td class="price">&dollar;<?=$product['price'] * $products_in_cart[$product['item_id']]?></td>
                     <td class="buttons">
-                        <input type="submit" value="Remove" name="remove">
+                        <a href="index.php?page=cart&remove=<?=$product['item_id']?>" class="remove">Remove</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
