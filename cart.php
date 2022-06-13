@@ -75,6 +75,7 @@ if ($products_in_cart) {
     // Calculate the subtotal
     foreach ($products as $product) {
         $subtotal += (float)$product['price'] * (int)$products_in_cart[$product['item_id']];
+        $_SESSION['subtotal'] = $subtotal;
     }
 }
 ?>
