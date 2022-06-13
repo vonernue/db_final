@@ -1,3 +1,30 @@
+div.category {
+	text-align: center;
+	margin: 0 auto;
+	
+}
+
+a.catagory_button {
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: #555;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 16px;
+	width: 200px;
+	margin: 10px 5px;
+	padding: 20px 40px;
+	text-align: center;
+	transition-duration: 0.4s;
+	text-decoration: none;
+}
+
+a.catagory_button:hover {
+	background-color: #ccc;
+	color: white;
+}
+
 * {
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
