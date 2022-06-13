@@ -63,7 +63,7 @@ function send_order_details_email($email, $products, $first_name, $last_name, $a
 // Template header, feel free to customize this
 function template_header($title, $head = '') {
 // Get the amount of items in the shopping cart, this will be displayed in the header.
-$num_items_in_cart = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'quantity')) : 0;
+$num_items_in_cart = isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0;
 $home_link = url('index.php');
 $products_link = url('index.php?page=products');
 $myaccount_link = url('index.php?page=myaccount');
