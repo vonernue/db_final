@@ -8,7 +8,7 @@ if (isset($_POST['login'], $_POST['email'], $_POST['password']) && filter_var($_
     $stmt->execute([ $_POST['email'] ]);
     $account = $stmt->fetch(PDO::FETCH_ASSOC);
     // If account exists verify password
-    if ($account && password_verify($_POST['password'], $account['password'])) {
+    if ($account && $_POST['password'] == $account['password']) {
         // User has logged in, create session data
         session_regenerate_id();
         $_SESSION['account_loggedin'] = TRUE;
@@ -47,7 +47,7 @@ if (isset($_POST['register'], $_POST['email'], $_POST['password'], $_POST['cpass
         // Account doesnt exist, create new account
         $stmt = $pdo->prepare('INSERT INTO customer (account, password, role) VALUES (?,?,?)');
         // Hash the password
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $password = $_POST['password'];
         $stmt->execute([ $_POST['email'], $password, 'member']);
         $account_id = $pdo->lastInsertId();
         // Automatically login the user
@@ -71,30 +71,32 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : 'orders';
 // If user is logged in
 if (isset($_SESSION['account_loggedin'])) {
     // Select all the users transations, which will appear under "My Orders"
-    $stmt = $pdo->prepare('SELECT * FROM order NATURAL JOIN buy WHERE customer_id = ? ORDER BY order.created DESC');
+    $stmt = $pdo->prepare('SELECT * FROM orders NATURAL JOIN buy WHERE customer_id = ? ORDER BY created DESC');
     $stmt->execute([ $_SESSION['account_id'] ]);
     $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // Select all the users transations, which will appear under "My Orders"
     $stmt = $pdo->prepare('SELECT
         p.item_name,
-        p.item_id AS item_id,
-        t.order_id AS txn_id,
+        p.item_id AS id,
+        p.img AS img,
+        t.order_id AS order_id,
         t.created AS transaction_date,
-        ti.item_price AS price,
-        ti.item_quantity AS quantity,
-        ti.item_id,
-        (SELECT m.full_path FROM products_media pm JOIN media m ON m.id = pm.media_id WHERE pm.product_id = p.id ORDER BY pm.position ASC LIMIT 1) AS img 
-        FROM order t
-        NATURAL JOIN order_contain ti 
-        NATURAL JOIN customer a 
-        NATURAL JOIN item p 
-        WHERE t.customer_id = ?
+        t.total_price AS total_price,
+        p.price AS price,
+        ti.quantity AS quantity,
+        ti.item_id
+        FROM orders t
+        JOIN buy b ON t.order_id = b.order_id
+        JOIN customer a ON b.customer_id = a.customer_id
+        JOIN order_contain ti ON t.order_id = ti.order_id
+        JOIN item p ON ti.item_id = p.item_id
+        WHERE b.customer_id = ?
         ORDER BY t.created DESC');
     $stmt->execute([ $_SESSION['account_id'] ]);
     $transactions_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Retrieve account details
-    $stmt = $pdo->prepare('SELECT * FROM customer WHERE account = ?');
+    $stmt = $pdo->prepare('SELECT * FROM customer WHERE customer_id = ?');
     $stmt->execute([ $_SESSION['account_id'] ]);
     $account = $stmt->fetch(PDO::FETCH_ASSOC);
     // Update settings
@@ -112,9 +114,9 @@ if (isset($_SESSION['account_loggedin'])) {
             $error = 'Password must be between 5 and 20 characters long!';
         } else {
             // Update account details in database
-            $password = $_POST['password'] ? password_hash($_POST['password'], PASSWORD_DEFAULT) : $account['password'];
+            $password = $_POST['password'] ? $_POST['password'] : $account['password'];
             $stmt = $pdo->prepare('UPDATE accounts SET email = ?, password = ? WHERE id = ?');
-            $stmt->execute([ $_POST['email'], $password, $first_name, $last_name, $address_street, $address_city, $address_state, $address_zip, $address_country, $_SESSION['account_id'] ]);
+            $stmt->execute([ $_POST['email'], $password, $_SESSION['account_id'] ]);
             // Redirect to settings page
             header('Location: ' . url('index.php?page=myaccount&tab=settings'));
             exit;           
@@ -192,7 +194,6 @@ if (isset($_SESSION['account_loggedin'])) {
         
         <div class="menu-items">
             <a href="<?=url('index.php?page=myaccount')?>">Orders</a>
-            <a href="<?=url('index.php?page=myaccount&tab=downloads')?>">Downloads</a>
             <a href="<?=url('index.php?page=myaccount&tab=settings')?>">Settings</a>
         </div>
 
@@ -210,27 +211,25 @@ if (isset($_SESSION['account_loggedin'])) {
         <div class="order">
             <div class="order-header">
                 <div>
-                    <div><span>Order</span># <?=$transaction['id']?></div>
+                    <div><span>Order</span># <?=$transaction['order_id']?></div>
                     <div class="rhide"><span>Date</span><?=date('F j, Y', strtotime($transaction['created']))?></div>
-                    <div><span>Status</span><?=$transaction['payment_status']?></div>
                 </div>
                 <div>
-                    <div class="rhide"><span>Shipping</span><?=currency_code?><?=number_format($transaction['shipping_amount'],2)?></div>
-                    <div><span>Total</span><?=currency_code?><?=number_format($transaction['payment_amount'],2)?></div>
+                    <div><span>Total</span><?=currency_code?><?=number_format($transaction['total_price'],2)?></div>
                 </div>
             </div>
             <div class="order-items">
                 <table>
                     <tbody>
                         <?php foreach ($transactions_items as $transaction_item): ?>
-                        <?php if ($transaction_item['txn_id'] != $transaction['txn_id']) continue; ?>
+                        <?php if ($transaction_item['order_id'] != $transaction['order_id']) continue; ?>
                         <tr>
                             <td class="img">
-                                <?php if (!empty($transaction_item['img']) && file_exists($transaction_item['img'])): ?>
-                                <img src="<?=base_url?><?=$transaction_item['img']?>" width="50" height="50" alt="<?=$transaction_item['name']?>">
+                                <?php if (!empty($transaction_item['img'])): ?>
+                                <img src="imgs/<?=$transaction_item['img']?>" width="50" height="50" alt="<?=$transaction_item['item_name']?>">
                                 <?php endif; ?>
                             </td>
-                            <td class="name"><?=$transaction_item['quantity']?> x <?=$transaction_item['name']?></td>
+                            <td class="name"><?=$transaction_item['quantity']?> x <?=$transaction_item['item_name']?></td>
                             <td class="price"><?=currency_code?><?=number_format($transaction_item['price'] * $transaction_item['quantity'],2)?></td>
                         </tr>
                         <?php endforeach; ?>
@@ -242,47 +241,7 @@ if (isset($_SESSION['account_loggedin'])) {
 
 
     </div>
-    <?php elseif ($tab == 'downloads'): ?>
-    <div class="mydownloads">
 
-        <h2>My Downloads</h2>
-
-        <?php if (empty($downloads)): ?>
-        <p>You have no digital downloads</p>
-        <?php endif; ?>
-        <?php if ($downloads): ?>
-        <table>
-            <thead>
-                <tr>
-                    <td colspan="2">Product</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $download_products_ids = []; ?>
-                <?php foreach ($transactions_items as $item): ?>
-                <?php if (isset($downloads[$item['product_id']]) && !in_array($item['product_id'], $download_products_ids)): ?>
-                <tr>
-                    <td class="img">
-                        <?php if (!empty($item['img']) && file_exists($item['img'])): ?>
-                        <img src="<?=base_url?><?=$item['img']?>" width="50" height="50" alt="<?=$item['name']?>">
-                        <?php endif; ?>
-                    </td>
-                    <td class="name"><?=$item['name']?></td>
-                    <td>
-                        <?php foreach ($downloads[$item['product_id']] as $download): ?>
-                        <a href="<?=url('index.php?page=download&id=' . md5($item['txn_id'] . $download['id']))?>" download><i class="fa-solid fa-download fa-sm"></i><?=basename($download['file_path'])?></a>
-                        <?php endforeach; ?>
-                    </td>
-                </tr>
-                <?php $download_products_ids[] = $item['product_id']; ?>
-                <?php endif; ?>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php endif; ?>
-
-    </div>
     <?php elseif ($tab == 'settings'): ?>
     <div class="settings">
 
@@ -291,7 +250,7 @@ if (isset($_SESSION['account_loggedin'])) {
         <form action="" method="post">
 
             <label for="email" class="form-label">Email</label>
-            <input id="email" type="email" name="email" placeholder="Email" value="<?=htmlspecialchars($account['email'], ENT_QUOTES)?>" class="form-field" required>
+            <input id="email" type="email" name="email" placeholder="Email" value="<?=htmlspecialchars($account['account'], ENT_QUOTES)?>" class="form-field" required>
 
             <label for="password" class="form-label">New Password</label>
             <input type="password" id="password" name="password" placeholder="New Password" value="" autocomplete="new-password" class="form-field">
