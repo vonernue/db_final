@@ -1,6 +1,6 @@
 <?= template_header('') ?>
 <?php
-$totalPrice = 200 ;
+$totalPrice = $_SESSION['subtotal']; ;
 $nameInput = "" ;
 $addressInput = "";
 $phoneInput = "";
@@ -16,7 +16,7 @@ if (isset($_POST["email"]))
 
 if ($nameInput != "" && $addressInput != "" && $phoneInput != "" && $emailInput != "") {
     pdo_connect_mysql();
-    $query = "INSERT INTO  `team5`.`order`(total_price,shipping_name,shipping_address,shipping_phone,shipping_email) 
+    $query = "INSERT INTO  `team5`.`orders`(total_price,shipping_name,shipping_address,shipping_phone,shipping_email) 
           VALUES(:total_price,:name,:address,:phone,:email)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":total_price", $totalPrice);
