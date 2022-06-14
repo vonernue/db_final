@@ -68,7 +68,7 @@ $home_link = url('index.php');
 $products_link = url('index.php?page=products');
 $myaccount_link = url('index.php?page=myaccount');
 $cart_link = url('index.php?page=cart');
-$admin_link = isset($_SESSION['account_loggedin'], $_SESSION['account_role']) && $_SESSION['account_role'] == 'admin' ? '<a href="' . base_url . 'admin/index.php" target="_blank">Admin</a>' : '';
+$admin_link = isset($_SESSION['account_loggedin'], $_SESSION['account_role']) && $_SESSION['account_role'] == 'admin' ? '<a href="index.php?page=manage" >Admin</a>' : '';
 $logout_link = isset($_SESSION['account_loggedin']) ? '<a title="Logout" href="' . url('index.php?page=logout') . '"><i class="fas fa-sign-out-alt"></i></a>' : '';
 $site_name = site_name;
 $base_url = base_url;
