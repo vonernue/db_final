@@ -40,14 +40,14 @@ if(isset($_GET['category'])){
 
 <?=template_manager('Manage')?>
 <div class ="category">
-    <a href="index.php?page=products" class="catagory_button">ALL</a>
-    <a href="index.php?page=products&category=T-Shirt"class="catagory_button">T-Shirt</a> 
-    <a href="index.php?page=products&category=men"class="catagory_button">Men</a> 
-    <a href="index.php?page=products&category=Women"class="catagory_button">Women</a> <br>
-    <a href="index.php?page=products&category=jacket"class="catagory_button">Jacket</a>
-    <a href="index.php?page=products&category=jeans"class="catagory_button">Jeans</a>
-    <a href="index.php?page=products&category=pants"class="catagory_button">Pants</a>
-    <a href="index.php?page=products&category=underwear"class="catagory_button">Underwear</a>
+    <a href="index.php?page=manage" class="catagory_button">ALL</a>
+    <a href="index.php?page=manage&category=T-Shirt"class="catagory_button">T-Shirt</a> 
+    <a href="index.php?page=manage&category=men"class="catagory_button">Men</a> 
+    <a href="index.php?page=manage&category=Women"class="catagory_button">Women</a> <br>
+    <a href="index.php?page=manage&category=jacket"class="catagory_button">Jacket</a>
+    <a href="index.php?page=manage&category=jeans"class="catagory_button">Jeans</a>
+    <a href="index.php?page=manage&category=pants"class="catagory_button">Pants</a>
+    <a href="index.php?page=manage&category=underwear"class="catagory_button">Underwear</a>
 </div>
 <div class="products content-wrapper">
     <h1> <?=ucfirst($category)?> </h1>
@@ -75,16 +75,16 @@ if(isset($_GET['category'])){
     <div class="buttons">
         <?php if ($current_page > 1): ?>
             <?php if ($category == 'Products'): ?>
-                <a href="index.php?page=products&p=<?=$current_page-1?>">Prev</a>
+                <a href="index.php?page=manage&p=<?=$current_page-1?>">Prev</a>
             <?php else: ?>
-                <a href="index.php?page=products&category=<?php echo $category;?>&p=<?=$current_page-1?>">Prev</a>
+                <a href="index.php?page=manage&category=<?php echo $category;?>&p=<?=$current_page-1?>">Prev</a>
             <?php endif; ?>
         <?php endif; ?>
         <?php if ($total_products > ($current_page * $num_products_on_each_page) - $num_products_on_each_page + count($products)): ?>
             <?php if ($category == "Products"): ?>
-                <a href="index.php?page=products&p=<?=$current_page+1?>">Next</a>
+                <a href="index.php?page=manage&p=<?=$current_page+1?>">Next</a>
             <?php else: ?>
-                <a href="index.php?page=products&category=<?php echo $category;?>&p=<?=$current_page+1?>">Next</a>
+                <a href="index.php?page=manage&category=<?php echo $category;?>&p=<?=$current_page+1?>">Next</a>
             <?php endif; ?>
         <?php endif; ?>
     </div>
