@@ -38,7 +38,7 @@ if(isset($_GET['category'])){
 
 ?>
 
-<?=template_admin_header('Manage')?>
+<?=template_manager('Manage')?>
 <div class ="category">
     <a href="index.php?page=products" class="catagory_button">ALL</a>
     <a href="index.php?page=products&category=T-Shirt"class="catagory_button">T-Shirt</a> 
@@ -54,9 +54,15 @@ if(isset($_GET['category'])){
     <p><?=$total_products?> Items </p>
     <div class="products-wrapper">
         <?php foreach ($products as $product): ?>
-        <a href="index.php?page=product&id=<?=$product['item_id']?>" class="product">
+        <a href="index.php?page=manage_product&id=<?=$product['item_id']?>" class="product">
             <img src="imgs/<?=$product['img']?>" width="200" height="200" alt="<?=$product['item_name']?>">
             <span class="name"><?=$product['item_name']?></span>
+            <div class="login">
+                <p>
+                    amount:
+                    <?=$product['quantity']?> 
+                </p>
+            </div>
             <span class="price">
                 &dollar;<?=$product['price']?>
                 <?php if ($product['rrp'] > 0): ?>

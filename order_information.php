@@ -1,6 +1,6 @@
 <?php
 
-$stmt = $pdo->prepare('SELECT * FROM `team5`.`order`');
+$stmt = $pdo->prepare('SELECT * FROM orders');
 $stmt->execute();
 $informations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
