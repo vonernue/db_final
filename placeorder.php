@@ -1,11 +1,8 @@
 <?= template_header('Place Order') ?>
 <?php
-    $totalPrice = $_SESSION['subtotal'];
-    if (isset($_SESSION['cart'])) {
-        unset($_SESSION['cart']);
-    }
-    if (isset($_POST["price"]))
-        $totalPrice = $_POST["price"];
+$totalPrice = $_SESSION['subtotal'];
+if (isset($_POST["price"]))
+    $totalPrice = $_POST["price"];
 ?>
 
 <div class="placeorder content-wrapper">
