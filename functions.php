@@ -3,7 +3,7 @@
 function pdo_connect_mysql() {
     try {
         // Connect to the MySQL database using the PDO interface
-    	$pdo = new PDO('mysql:host=' . '140.122.184.121' . ';dbname=' . 'team5' . ';charset=utf8', 'team5', 'NAXoQo');
+    	$pdo = new PDO('mysql:host=' . '140.122.184.126' . ';dbname=' . 'team5' . ';charset=utf8', 'team5', 'NAXoQo');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     } catch (PDOException $exception) {
