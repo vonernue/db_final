@@ -12,13 +12,9 @@ if (isset($_GET['id'])) {
         exit('Product does not exist!');
     }
 
-    $stmt_category = $pdo->prepare('SELECT * FROM item natural join item_category WHERE item_id = ?');
-    $stmt_category->execute([$_GET['id']]);
-    $product_category = $stmt_category->fetch(PDO::FETCH_ASSOC);
-    if (!$product_category) {
-        // Simple error to display if the id for the product doesn't exists (array is empty)
-        exit('Product\'s category does not exist!');
-    }
+    $stmt_tag = $pdo->prepare('SELECT * FROM item_tags WHERE item_id = ?');
+    $stmt_tag->execute([$_GET['id']]);
+    $product_tags = $stmt_tag->fetchall(PDO::FETCH_ASSOC);
 
 } else {
     // Simple error to display if the id wasn't specified
@@ -32,6 +28,10 @@ if (isset($_GET['id'])) {
     <img src="imgs/<?=$product['img']?>" width="500" height="500" alt="<?=$product['item_name']?>">
     <div>
         <h1 class="name"><?=$product['item_name']?></h1>
+        <p><?="tag : "?></p>
+        <?php foreach ($product_tags as $tag): ?>
+            <p><?=$tag['tag']?></p>
+        <?php endforeach; ?>
         <span class="price">
             &dollar;<?=$product['price']?>
             <?php if ($product['rrp'] > 0): ?>
