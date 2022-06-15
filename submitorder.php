@@ -48,6 +48,18 @@ if ($nameInput != "" && $addressInput != "" && $phoneInput != "" && $emailInput 
             echo $stmt->error;
         }
     }
+    if (isset($_SESSION['account_loggedin'])) {
+        $query = "INSERT INTO  `team5`.`buy`(order_id,customer_id) 
+              VALUES(:order_id,:customer_id)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":order_id", $order_id);
+        $stmt->bindParam(":customer_id",$_SESSION['account_id']);
+        if ($stmt->execute()) {
+            //echo "Insert Success!";
+        } else {
+            echo $stmt->error;
+        }
+    }
     if (isset($_SESSION['cart'])) {
         unset($_SESSION['cart']);
     }
