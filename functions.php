@@ -125,7 +125,7 @@ echo <<<EOT
         </main>
         <footer>
             <div class="content-wrapper">
-                <p>&copy; $year, <a href="https://codeshack.io/package/php/advanced-shopping-cart-system/" target="_blank">Shopping Cart System</a></p>
+                <p>&copy; $year,Shopping Cart System</p>
             </div>
         </footer>
         <script>
