@@ -26,11 +26,11 @@ if (isset($_GET['id'])) {
 
 <div class="product content-wrapper">
     <img src="imgs/<?=$product['img']?>" width="500" height="500" alt="<?=$product['item_name']?>">
-    <div>
+    <div class = "product_info">
         <h1 class="name"><?=$product['item_name']?></h1>
-        <p><?="tag : "?></p>
+        <p style="margin:8px;"><?="tag : "?></p>
         <?php foreach ($product_tags as $tag): ?>
-            <p><?=$tag['tag']?></p>
+            <p class = "product_tags"><?=$tag['tag']?></p>
         <?php endforeach; ?>
         <span class="price">
             &dollar;<?=$product['price']?>
